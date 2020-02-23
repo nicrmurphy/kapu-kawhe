@@ -17,7 +17,6 @@ function App() {
         <a
           className="App-link"
           href={`https://finance-simulation.${window.location.host}/`}
-          target="_blank"
           rel="noopener noreferrer"
         >
           The Game of Life Financial Simulation
