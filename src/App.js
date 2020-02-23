@@ -11,7 +11,7 @@ function App() {
           Welcome to Kapu-Kawhe!
         </h2>
         <p>
-          This site is under currently under construction and will be used to host web applications and tools.
+          This site is currently under construction and will be used to host web applications and tools.
         </p>
         <p>Apps in Active Development:</p>
         <a
