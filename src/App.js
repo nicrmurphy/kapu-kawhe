@@ -8,9 +8,9 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/wi-outbreak">
+        {/* <Route path="/wi-outbreak">
           <Outbreak />
-        </Route>
+        </Route> */}
         <Route path="/">
           <Redirect to="/" />
           <Main />
