@@ -20,7 +20,7 @@ function Main() {
         </Link> */}
         <a
           className="App-link"
-          href={`https://${window.location.host}/wi-outbreak`}
+          href={`https://${window.location.host}/wi-outbreak.html`}
           rel="noopener noreferrer">
           Live Map of COVID-19 Cases in Wisconsin
         </a>
