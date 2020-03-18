@@ -2,13 +2,25 @@
   text-align: center;
 }
 
+.App-logo-container {
+  /* crop coffee svg */
+  height: 33vmin;
+  overflow: hidden;
+  margin-bottom: 6vmin;
+}
+
 .App-logo {
   height: 40vmin;
-  pointer-events: none;
+  margin-bottom: -20vmin;
+}
+
+.App-logo-text {
+  font-size: 9vmin;
+  text-shadow: 0 1px 4px #000;
+  margin-top: 0;
 }
 
 .App-header {
-  background-color: #3aafa9;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -16,12 +28,15 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: #feffff;
+  /* background-color: #3aafa9; */
+  background-image: linear-gradient(#30908b, #3aafa9);
 }
 
 .App-body-text {
   font-family: 'Times New Roman', Times, serif;
   font-weight: normal;
-  color: #17252A;
+  color: #17252a;
+  margin-top: 0;
 }
 
 .App-link {
@@ -30,3 +45,9 @@
   /* font-family: sans-serif; */
 }
 
+.unselectable {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}

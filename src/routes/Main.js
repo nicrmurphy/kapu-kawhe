@@ -6,12 +6,14 @@ function Main() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={coffee} alt="coffee" />
-        <h2>KIA ORA!</h2>
+        <div className="App-logo-container">
+          <img className="App-logo unselectable" src={coffee} alt="coffee" />
+          <h1 className="App-logo-text unselectable">KIA ORA!</h1>
+        </div>
         <p className="App-body-text">
           My name is Nic, and I use this site to host web applications and tools
           I develop.
-          <br/>
+          <br />
           Enjoy your time looking around!
         </p>
         <h3>Apps in Active Development:</h3>
@@ -24,15 +26,15 @@ function Main() {
           rel="noopener noreferrer">
           Live Map of COVID-19 Cases in Wisconsin
         </a>
-        <br/>
+        <br />
         <a
           className="App-link"
           href={`https://finance-simulation.${window.location.host}/`}
           rel="noopener noreferrer">
           The Game of Life Financial Simulation
         </a>
-        <br/>
-        <br/>
+        <br />
+        <br />
       </header>
     </div>
   )
