@@ -2,24 +2,6 @@
   text-align: center;
 }
 
-.App-logo-container {
-  /* crop coffee svg */
-  height: 33vmin;
-  overflow: hidden;
-  margin-bottom: 6vmin;
-}
-
-.App-logo {
-  height: 40vmin;
-  margin-bottom: -20vmin;
-}
-
-.App-logo-text {
-  font-size: 9vmin;
-  text-shadow: 0 1px 4px #000;
-  margin-top: 0;
-}
-
 .App-header {
   min-height: 100vh;
   display: flex;
@@ -50,4 +32,9 @@
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
+}
+
+.align-center {
+  margin: auto;
+  text-align: center;
 }

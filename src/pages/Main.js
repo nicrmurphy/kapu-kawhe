@@ -1,15 +1,12 @@
 import React from 'react'
-import coffee from '../coffee.svg'
-import { Link } from 'react-router-dom'
+import Logo from '../components/Main/Logo'
+// import { Link } from 'react-router-dom'
 
 function Main() {
   return (
     <div className="App">
       <header className="App-header">
-        <div className="App-logo-container">
-          <img className="App-logo unselectable" src={coffee} alt="coffee" />
-          <h1 className="App-logo-text unselectable">KIA ORA!</h1>
-        </div>
+        <Logo size="lg" text="kia ora!" />
         <p className="App-body-text">
           My name is Nic, and I use this site to host web applications and tools
           I develop.
@@ -18,8 +15,9 @@ function Main() {
         </p>
         <h3>Apps in Active Development:</h3>
         {/* <Link className="App-link" to="/wi-outbreak">
-          Live Map of COVID-19 Cases in Wisconsin
-        </Link> */}
+          Live Map of COVID-19 Cases in Wisconsin - REACT
+        </Link>
+        <br /> */}
         <a
           className="App-link"
           href={`https://${window.location.host}/wi-outbreak.html`}

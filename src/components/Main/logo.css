@@ -1,0 +1,44 @@
+.logo-container {
+  overflow: hidden;
+}
+
+.logo-container-lg {
+  height: 33vmin; /* crop coffee svg */
+  margin-bottom: 6vmin;
+}
+
+.logo-container-sm {
+  height: 7.5vmin; /* crop coffee svg */
+  margin-bottom: 6vmin;
+}
+
+.logo-lg {
+  height: 40vmin;
+  margin-bottom: -20vmin;
+}
+
+.logo-sm {
+  height: 12vmin;
+  margin-top: -2vmin;
+  margin-bottom: -6vmin;
+}
+
+.logo-text {
+  color: #feffff;
+  font-variant: small-caps;
+  text-shadow: 0 1px 4px #000;
+  margin-top: 0;
+}
+
+.logo-text-lg {
+  font-size: 9vmin;
+}
+
+.logo-text-sm {
+  font-size: 2.5vmin;
+  margin-left: .5vmin;
+}
+
+.logo-link {
+  text-decoration: none;
+}
