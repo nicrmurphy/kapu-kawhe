@@ -10,7 +10,9 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.0"
+    "react-script-tag": "^1.1.2",
+    "react-scripts": "3.4.0",
+    "wi-outbreak": "file:../wi-outbreak"
   },
   "scripts": {
     "start": "react-scripts start",

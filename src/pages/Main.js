@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from '../components/Main/Logo'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function Main() {
   return (
@@ -14,10 +14,10 @@ function Main() {
           Enjoy your time looking around!
         </p>
         <h3>Apps in Active Development:</h3>
-        {/* <Link className="App-link" to="/wi-outbreak">
+        <Link className="App-link" to="/wi-outbreak">
           Live Map of COVID-19 Cases in Wisconsin - REACT
         </Link>
-        <br /> */}
+        <br />
         <a
           className="App-link"
           href={`https://${window.location.host}/wi-outbreak.html`}
