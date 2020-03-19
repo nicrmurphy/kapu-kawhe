@@ -15,15 +15,8 @@ function Main() {
         </p>
         <h3>Apps in Active Development:</h3>
         <Link className="App-link" to="/wi-outbreak">
-          Live Map of COVID-19 Cases in Wisconsin - REACT
-        </Link>
-        <br />
-        <a
-          className="App-link"
-          href={`https://${window.location.host}/wi-outbreak.html`}
-          rel="noopener noreferrer">
           Live Map of COVID-19 Cases in Wisconsin
-        </a>
+        </Link>
         <br />
         <a
           className="App-link"

@@ -11,6 +11,9 @@ function App() {
         <Route path="/wi-outbreak">
           <Outbreak />
         </Route>
+        <Route path="/wi-outbreak.html">
+          <Redirect to="/wi-outbreak" />
+        </Route>
         <Route path="/">
           <Redirect to="/" />
           <Main />
