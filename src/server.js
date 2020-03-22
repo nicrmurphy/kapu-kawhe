@@ -1,8 +1,17 @@
+#!/usr/bin/env node
+
 const app = require('express')()
-const { serverPort: port, dbRoute, dbName } = require('./env')
+const { corsOrigin, uri, serverPort: port, dbRoute, dbName } = require('./env')
+const cors = require('cors') 
+
+const corsOptions = {
+  origin: corsOrigin,
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+app.use(cors(corsOptions))
 
 const MongoClient = require('mongodb').MongoClient
-const { uri } = require('./env')
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true

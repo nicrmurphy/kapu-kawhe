@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Logo from '../components/Main/Logo'
 import '../App.css'
 import OutbreakMap from 'wi-outbreak'
-import { serverPort as port, dbRoute } from '../env'
+import { corsOrigin, serverPort as port, dbRoute } from '../env'
 import {
   TableContainer,
   Table,
@@ -21,17 +21,17 @@ function Outbreak() {
   const [infoText, setInfoText] = useState(
     'Fetching data from Wisconsin DHS...'
   )
-  const url = 'https://cors-anywhere.herokuapp.com/https://bit.ly/3a5VWXQ'
-  // const url = `http://localhost:${port}${dbRoute}?state=wi&date=3/21/2020`
+  // const url = 'https://cors-anywhere.herokuapp.com/https://bit.ly/3a5VWXQ'
+  const url = `${corsOrigin}:${port}${dbRoute}?state=wi&date=3/22/2020`
 
   useEffect(() => {
     async function execFetch() {
       try {
         let res = await fetch(url)
-        res = await res.json()
-        const data = res.features.map(county => county.attributes)
+        const data = await res.json()
+        // const data = res.features.map(county => county.attributes)
         // const data = await getOutbreakData('wi', '3/21/2020')
-        // console.log(data)
+        console.log(res)
         setFetchData(false)
         setData(data)
         setInfoText(`As of ${data[0].DATE} ~2:00pm CST`)
@@ -45,7 +45,7 @@ function Outbreak() {
       execFetch()
     }
     return () => {}
-  }, [fetchData])
+  }, [fetchData, url])
   return (
     <div className="Outbreak align-center">
       <h1 className="Outbreak-text">
