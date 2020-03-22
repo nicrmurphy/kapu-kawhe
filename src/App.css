@@ -39,6 +39,24 @@
   text-align: center;
 }
 
-#outbreak-map {
+#Outbreak-wrapper {
+  background-color: #25274d;
+}
+
+.Outbreak-text {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #feffff;
+}
+
+#outbreak-table-container {
   margin: auto;
+}
+
+.Outbreak-logo-wrapper {
+  padding: 2em;
 }
