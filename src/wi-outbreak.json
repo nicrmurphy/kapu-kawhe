@@ -1,0 +1,263 @@
+[
+  {
+    "GEOID": "55079",
+    "NAME": "Milwaukee",
+    "POSITIVE": 126,
+    "DEATHS": 2,
+    "CMNTY_SPRD": "*",
+    "CMNTY_SPRD2": "Community Spread",
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55025",
+    "NAME": "Dane",
+    "POSITIVE": 49,
+    "DEATHS": 0,
+    "CMNTY_SPRD": "*",
+    "CMNTY_SPRD2": "Community Spread",
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55133",
+    "NAME": "Waukesha",
+    "POSITIVE": 20,
+    "DEATHS": 0,
+    "CMNTY_SPRD": "*",
+    "CMNTY_SPRD2": "Community Spread",
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55039",
+    "NAME": "Fond du Lac",
+    "POSITIVE": 15,
+    "DEATHS": 1,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55089",
+    "NAME": "Ozaukee",
+    "POSITIVE": 11,
+    "DEATHS": 1,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55117",
+    "NAME": "Sheboygan",
+    "POSITIVE": 6,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55063",
+    "NAME": "La Crosse",
+    "POSITIVE": 5,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55059",
+    "NAME": "Kenosha",
+    "POSITIVE": 5,
+    "DEATHS": 0,
+    "CMNTY_SPRD": "*",
+    "CMNTY_SPRD2": "Community Spread",
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55139",
+    "NAME": "Winnebago",
+    "POSITIVE": 5,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55021",
+    "NAME": "Columbia",
+    "POSITIVE": 5,
+    "DEATHS": 0,
+    "CMNTY_SPRD": "*",
+    "CMNTY_SPRD2": "Community Spread",
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55101",
+    "NAME": "Racine",
+    "POSITIVE": 4,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55009",
+    "NAME": "Brown",
+    "POSITIVE": 3,
+    "DEATHS": 0,
+    "CMNTY_SPRD": "*",
+    "CMNTY_SPRD2": "Community Spread",
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55127",
+    "NAME": "Walworth",
+    "POSITIVE": 3,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55105",
+    "NAME": "Rock",
+    "POSITIVE": 3,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55131",
+    "NAME": "Washington",
+    "POSITIVE": 3,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55111",
+    "NAME": "Sauk",
+    "POSITIVE": 2,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55035",
+    "NAME": "Eau Claire",
+    "POSITIVE": 2,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55087",
+    "NAME": "Outagamie",
+    "POSITIVE": 2,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55109",
+    "NAME": "St. Croix",
+    "POSITIVE": 2,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55141",
+    "NAME": "Wood",
+    "POSITIVE": 1,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55015",
+    "NAME": "Calumet",
+    "POSITIVE": 1,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55055",
+    "NAME": "Jefferson",
+    "POSITIVE": 1,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55017",
+    "NAME": "Chippewa",
+    "POSITIVE": 1,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55031",
+    "NAME": "Douglas",
+    "POSITIVE": 1,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55073",
+    "NAME": "Marathon",
+    "POSITIVE": 1,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55045",
+    "NAME": "Green",
+    "POSITIVE": 1,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55093",
+    "NAME": "Pierce",
+    "POSITIVE": 1,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55033",
+    "NAME": "Dunn",
+    "POSITIVE": 1,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  },
+  {
+    "GEOID": "55007",
+    "NAME": "Bayfield",
+    "POSITIVE": 1,
+    "DEATHS": 0,
+    "CMNTY_SPRD": null,
+    "CMNTY_SPRD2": null,
+    "DATE": "3/21/2020"
+  }
+]

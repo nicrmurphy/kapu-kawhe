@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Logo from '../components/Main/Logo'
 import '../App.css'
 import OutbreakMap from 'wi-outbreak'
+import { serverPort as port, dbRoute } from '../env'
 import {
   TableContainer,
   Table,
@@ -11,7 +12,6 @@ import {
   TableBody,
   Paper,
   Container,
-  Typography,
   Link
 } from '@material-ui/core'
 
@@ -22,6 +22,7 @@ function Outbreak() {
     'Fetching data from Wisconsin DHS...'
   )
   const url = 'https://cors-anywhere.herokuapp.com/https://bit.ly/3a5VWXQ'
+  // const url = `http://localhost:${port}${dbRoute}?state=wi&date=3/21/2020`
 
   useEffect(() => {
     async function execFetch() {
@@ -29,10 +30,11 @@ function Outbreak() {
         let res = await fetch(url)
         res = await res.json()
         const data = res.features.map(county => county.attributes)
+        // const data = await getOutbreakData('wi', '3/21/2020')
         // console.log(data)
         setFetchData(false)
         setData(data)
-        setInfoText('')
+        setInfoText(`As of ${data[0].DATE} ~2:00pm CST`)
       } catch (err) {
         console.log(err)
         setInfoText('Error fetching data')
@@ -45,14 +47,14 @@ function Outbreak() {
     return () => {}
   }, [fetchData])
   return (
-    <div id="Outbreak-wrapper" className="align-center">
-      <Typography className="Outbreak-text" variant="h4">
+    <div className="Outbreak align-center">
+      <h1 className="Outbreak-text">
         POSITIVE COVID-19 CASES BY COUNTY
-      </Typography>
+      </h1>
       <OutbreakMap data={data} className="align-center" />
-      <h2 className="Outbreak-text">{infoText}</h2>
+      {infoText && <h2 className="Outbreak-text">{infoText}</h2>}
       <Container maxWidth="xs">
-        <TableContainer id="outbreak-table-container" component={Paper}>
+        <TableContainer className="Outbreak-table-container" component={Paper}>
           <Table id="outbreak-table" size="small">
             <TableHead>
               <TableRow>
@@ -81,7 +83,7 @@ function Outbreak() {
       </Container>
       <h2 className="Outbreak-text">
         Source:{' '}
-        <Link href="https://www.dhs.wisconsin.gov/outbreaks/index.htm">
+        <Link className="Outbreak-link" color="initial" href="https://www.dhs.wisconsin.gov/outbreaks/index.htm">
           Wisconsin Department of Health Services
         </Link>
       </h2>

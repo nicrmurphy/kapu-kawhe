@@ -7,6 +7,11 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.1",
     "@testing-library/user-event": "^7.2.1",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "mongodb": "^3.5.5",
+    "mongodb-client-encryption": "^1.0.1",
+    "path": "^0.12.7",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -19,6 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "link": "cd ../wi-outbreak && npm link ../kapu-kawhe/node_modules/react",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
