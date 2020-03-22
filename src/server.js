@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 const app = require('express')()
-const { corsOrigin, uri, serverPort: port, dbRoute, dbName } = require('./env')
+const { corsOriginHost, corsOriginPort, uri, serverPort: port, dbRoute, dbName } = require('./env')
 const cors = require('cors') 
 
 const corsOptions = {
-  origin: corsOrigin,
+  origin: `${corsOriginHost}:${corsOriginPort}`,
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
