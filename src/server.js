@@ -1,15 +1,23 @@
 #!/usr/bin/env node
 
 const app = require('express')()
-const { corsOriginHost, uri, serverPort: port, serverHost, dbRoute, dbName } = require('./env')
-const cors = require('cors') 
+const {
+  clientOrigin,
+  useCors,
+  uri,
+  serverPort: port,
+  dbRoute,
+  dbName
+} = require('./env')
 
-const corsOptions = {
-  origin: `${corsOriginHost}`,
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+if (useCors) {
+  const cors = require('cors')
+  const corsOptions = {
+    origin: `${clientOrigin}`,
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
+  app.use(cors(corsOptions))
 }
-
-// app.use(cors(corsOptions))
 
 const MongoClient = require('mongodb').MongoClient
 const client = new MongoClient(uri, {
@@ -23,13 +31,13 @@ client
     console.log('db connection established')
 
     app.get(dbRoute, (req, res) => {
-       console.log(req.headers)
-       console.log(req.headers.origin)
-       if (
-         req.headers['sec-fetch-site'] !== 'same-site' ||
-         req.headers['sec-fetch-mode'] !== 'cors' ||
-         req.headers.origin !== `${corsOriginHost}`
-       ) {
+      //  console.log(req.headers)
+      //  console.log(req.headers.origin)
+      if (
+        req.headers['sec-fetch-site'] !== 'same-site' ||
+        req.headers['sec-fetch-mode'] !== 'cors' ||
+        req.headers.origin !== `${clientOrigin}`
+      ) {
         res.sendStatus(403)
         return
       }
@@ -40,13 +48,16 @@ client
       }
 
       const collection = client.db(dbName).collection(state)
-      collection.find({ DATE: date }).sort({ POSITIVE: -1 }).toArray((err, result) => {
-        if (err) {
-          res.sendStatus(500)
-          return
-        }
-        res.send(result)
-      })
+      collection
+        .find({ DATE: date })
+        .sort({ POSITIVE: -1 })
+        .toArray((err, result) => {
+          if (err) {
+            res.sendStatus(500)
+            return
+          }
+          res.send(result)
+        })
     })
 
     app.get('/', (req, res) => {

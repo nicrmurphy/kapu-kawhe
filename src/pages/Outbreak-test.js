@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Logo from '../components/Main/Logo'
 import '../App.css'
 import OutbreakMap from 'wi-outbreak'
-import { corsOriginHost, serverHost, dbRoute } from '../env'
+import { apiLocation, dbRoute } from '../env'
 import {
   TableContainer,
   Table,
@@ -22,7 +22,7 @@ function OutbreakTest() {
     'Fetching data from Wisconsin DHS...'
   )
   // const url = 'https://cors-anywhere.herokuapp.com/https://bit.ly/3a5VWXQ'
-  const url = `${serverHost}${dbRoute}?state=wi&date=3/22/2020`
+  const url = `${apiLocation}${dbRoute}?state=wi&date=3/22/2020`
 
   useEffect(() => {
     async function execFetch() {
