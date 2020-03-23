@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Logo from '../components/Main/Logo'
 import '../App.css'
 import OutbreakMap from 'wi-outbreak'
-// import { corsOriginHost, serverPort, dbRoute } from '../env'
+import { corsOriginHost, serverPort, dbRoute } from '../env'
 import {
   TableContainer,
   Table,
@@ -15,21 +15,21 @@ import {
   Link
 } from '@material-ui/core'
 
-function Outbreak() {
+function OutbreakTest() {
   const [data, setData] = useState(null)
   const [fetchData, setFetchData] = useState(true)
   const [infoText, setInfoText] = useState(
     'Fetching data from Wisconsin DHS...'
   )
-  const url = 'https://cors-anywhere.herokuapp.com/https://bit.ly/3a5VWXQ'
-  // const url = `${corsOriginHost}:${serverPort}${dbRoute}?state=wi&date=3/22/2020`
+  // const url = 'https://cors-anywhere.herokuapp.com/https://bit.ly/3a5VWXQ'
+  const url = `${corsOriginHost}:${serverPort}${dbRoute}?state=wi&date=3/22/2020`
 
   useEffect(() => {
     async function execFetch() {
       try {
         let res = await fetch(url)
-        res = await res.json()
-        const data = res.features.map(county => county.attributes)
+        const data = await res.json()
+        // const data = res.features.map(county => county.attributes)
         // const data = await getOutbreakData('wi', '3/21/2020')
         // console.log(res)
         setFetchData(false)
@@ -94,4 +94,4 @@ function Outbreak() {
   )
 }
 
-export default Outbreak
+export default OutbreakTest
