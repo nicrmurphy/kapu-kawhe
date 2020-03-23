@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
 const app = require('express')()
-const { corsOriginHost, corsOriginPort, uri, serverPort: port, dbRoute, dbName } = require('./env')
+const { corsOriginHost, uri, serverPort: port, serverHost, dbRoute, dbName } = require('./env')
 const cors = require('cors') 
 
 const corsOptions = {
-  origin: `${corsOriginHost}:${corsOriginPort}`,
+  origin: `${corsOriginHost}`,
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
-app.use(cors(corsOptions))
+// app.use(cors(corsOptions))
 
 const MongoClient = require('mongodb').MongoClient
 const client = new MongoClient(uri, {
@@ -23,11 +23,16 @@ client
     console.log('db connection established')
 
     app.get(dbRoute, (req, res) => {
-      console.log(req.headers.host)
-      // if (req.headers.host !== `localhost:${port}`) {
-      //   res.sendStatus(401)
-      //   return
-      // }
+       console.log(req.headers)
+       console.log(req.headers.origin)
+       if (
+         req.headers['sec-fetch-site'] !== 'same-site' ||
+         req.headers['sec-fetch-mode'] !== 'cors' ||
+         req.headers.origin !== `${corsOriginHost}`
+       ) {
+        res.sendStatus(403)
+        return
+      }
       const { state, date } = req.query
       if (!state || !date) {
         res.sendStatus(400)
@@ -45,6 +50,7 @@ client
     })
 
     app.get('/', (req, res) => {
+      console.log(req.headers.host)
       res.sendStatus(200)
     })
 
