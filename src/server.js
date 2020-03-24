@@ -42,14 +42,15 @@ client
         return
       }
       const { state, date } = req.query
-      if (!state || !date) {
+      if (!state) {
         res.sendStatus(400)
         return
       }
 
+      const findQuery = date ? { DATE: date } : {}
       const collection = client.db(dbName).collection(state)
       collection
-        .find({ DATE: date })
+        .find(findQuery)
         .sort({ POSITIVE: -1 })
         .toArray((err, result) => {
           if (err) {

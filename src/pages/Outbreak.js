@@ -28,7 +28,9 @@ import {
 } from '@material-ui/pickers'
 
 async function execFetch(date) {
-  const url = `${apiLocation}${dbRoute}?state=wi&date=${date}`
+  // const url = `${apiLocation}${dbRoute}?state=wi&date=${date}`
+  const queryString = `?state=wi${date ? `&date=${date}` : ''}`
+  const url = `${apiLocation}${dbRoute}${queryString}`
   const today = format(new Date(), 'M/d/yyyy')
   try {
     let res = await fetch(url)
@@ -68,11 +70,24 @@ function Outbreak() {
 
   useEffect(() => {
     async function fetchInitial() {
-      const date = format(new Date(), 'M/d/yyyy')
-      const data = await execFetch(date)
-      setCachedData({ [date]: data })
-      setData(data)
-      setInfoText(`as of ${data.length > 0 ? data[0].DATE : date} ~2:00pm CST`)
+      const data = await execFetch()
+      const cachedData = {}
+      for (const i in data) {
+        const doc = data[i]
+        if (!cachedData[doc.DATE]) {
+          cachedData[doc.DATE] = [doc]
+        } else {
+          cachedData[doc.DATE].push(doc)
+        }
+      }
+      const today = format(new Date(), 'M/d/yyyy')
+      if (!cachedData[today]) {
+        cachedData[today] = await fetchDHS()
+      }
+
+      setCachedData(cachedData)
+      setData(cachedData[today])
+      setInfoText(`as of ${cachedData[today][0].DATE} ~2:00pm CST`)
     }
     fetchInitial()
     return () => {}
