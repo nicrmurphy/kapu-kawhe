@@ -140,7 +140,7 @@ function Outbreak() {
         <meta property="og:url" content={process.env.PUBLIC_URL} />
         <meta property="og:title" content="WI Covid-19 Outbreak" />
         <meta property="og:description" content="Visualized Covid-19 outbreak in Wisconsin" />
-        <meta property="og:image" content={`${process.env.PUBLIC_URL}/coffee256.png`} />
+        <meta property="og:image" content={`${process.env.PUBLIC_URL}/outbreak.png`} />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
@@ -150,7 +150,7 @@ function Outbreak() {
           property="twitter:description"
           content="Visualized Covid-19 outbreak in Wisconsin"
         />
-        <meta property="twitter:image" content={`${process.env.PUBLIC_URL}/coffee256.png`} />
+        <meta property="twitter:image" content={`${process.env.PUBLIC_URL}/outbreak.png`} />
       </MetaTags>
       <h1 className="Outbreak-title">POSITIVE COVID-19 CASES BY COUNTY</h1>
       <div className="Outbreak-date-picker-wrapper">
