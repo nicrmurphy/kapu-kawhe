@@ -50,17 +50,26 @@
 
 .Outbreak-text {
   margin-top: 0;
-  padding-top: 1em;
+  padding-top: .5em;
   padding-bottom: 1em;
-  /* flex-direction: column; */
+  font-size: calc(10px + 2vmin);
+  color: #feffff;
+}
+
+.Outbreak-title {
+  margin-top: 0;
+  margin-left: .5em;
+  margin-right: .5em;
+  padding-top: 1em;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(15px + 2vmin);
   color: #feffff;
 }
 
 .Outbreak-table-container {
   margin: auto;
+  margin-bottom: 2em;
 }
 
 .Outbreak-logo-wrapper {
@@ -69,4 +78,13 @@
 
 .Outbreak-link {
   color: #2e9cca;
+}
+
+.Outbreak-date-picker-wrapper {
+  min-height: 7em;
+}
+
+/* TODO: don't override this way */
+.MuiSvgIcon-root {
+  color: white;
 }
