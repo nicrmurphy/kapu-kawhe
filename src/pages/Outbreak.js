@@ -1,6 +1,7 @@
 import 'date-fns'
 import { format, isAfter, addDays } from 'date-fns'
 import React, { useState, useEffect } from 'react'
+import MetaTags from 'react-meta-tags'
 import Logo from '../components/Main/Logo'
 import '../App.css'
 import OutbreakMap from 'wi-outbreak'
@@ -128,9 +129,34 @@ function Outbreak() {
 
   return (
     <div className="Outbreak align-center">
+      <MetaTags>
+        {/* Primary Meta Tags */}
+        <title>WI Covid-19 Outbreak</title>
+        <meta name="title" content="WI Covid-19 Outbreak" />
+        <meta name="description" content="Visualized Covid-19 outbreak in Wisconsin" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://kapu-kawhe.com/wi-outbreak" />
+        <meta property="og:title" content="WI Covid-19 Outbreak" />
+        <meta property="og:description" content="Visualized Covid-19 outbreak in Wisconsin" />
+        <meta property="og:image" content="/coffee256.png" />
+
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://kapu-kawhe.com/wi-outbreak" />
+        <meta property="twitter:title" content="WI Covid-19 Outbreak" />
+        <meta
+          property="twitter:description"
+          content="Visualized Covid-19 outbreak in Wisconsin"
+        />
+        <meta property="twitter:image" content="/coffee256.png" />
+      </MetaTags>
       <h1 className="Outbreak-title">POSITIVE COVID-19 CASES BY COUNTY</h1>
       <div className="Outbreak-date-picker-wrapper">
-        <IconButton aria-label="Previous" onClick={() => handleDateChange(addDays(selectedDate, -1))}>
+        <IconButton
+          aria-label="Previous"
+          onClick={() => handleDateChange(addDays(selectedDate, -1))}>
           <NavigateBeforeIcon />
         </IconButton>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -151,7 +177,9 @@ function Outbreak() {
             }}
           />
         </MuiPickersUtilsProvider>
-        <IconButton aria-label="Next" onClick={() => handleDateChange(addDays(selectedDate, 1))}>
+        <IconButton
+          aria-label="Next"
+          onClick={() => handleDateChange(addDays(selectedDate, 1))}>
           <NavigateNextIcon />
         </IconButton>
       </div>
