@@ -155,7 +155,7 @@ function Outbreak() {
           <NavigateNextIcon />
         </IconButton>
       </div>
-      {data && <OutbreakMap data={data} className="align-center" />}
+      <OutbreakMap data={data ? data : []} className="align-center" />
       {infoText && <h2 className="Outbreak-text">{infoText}</h2>}
       <Container maxWidth="xs">
         <TableContainer className="Outbreak-table-container" component={Paper}>
