@@ -66,7 +66,7 @@ function Outbreak() {
       const data = await execFetch(date)
       setCachedData({ [date]: data })
       setData(data)
-      setInfoText(`As of ${date} ~2:00pm CST`)
+      setInfoText(`As of ${data.length > 0 ? data[0].DATE : date} ~2:00pm CST`)
     }
     fetchInitial()
     return () => {}
@@ -87,7 +87,7 @@ function Outbreak() {
     }
     setData(data)
     if (data.length > 0) {
-      setInfoText(`As of ${date} ~2:00pm CST`)
+      setInfoText(`As of ${data[0].DATE} ~2:00pm CST`)
     } else {
       setInfoText(`No data available for ${date}`)
     }
