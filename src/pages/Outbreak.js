@@ -60,13 +60,19 @@ function Outbreak() {
   const [infoText, setInfoText] = useState('')
   const [selectedDate, setSelectedDate] = useState(new Date())
 
+  const sumArr = (sum, val) => sum + val
+  const totalCases =
+    data && data.length > 0 ? data.map(c => c.POSITIVE).reduce(sumArr) : ''
+  const totalDeaths =
+    data && data.length > 0 ? data.map(c => c.DEATHS).reduce(sumArr) : ''
+
   useEffect(() => {
     async function fetchInitial() {
       const date = format(new Date(), 'M/d/yyyy')
       const data = await execFetch(date)
       setCachedData({ [date]: data })
       setData(data)
-      setInfoText(`As of ${data.length > 0 ? data[0].DATE : date} ~2:00pm CST`)
+      setInfoText(`as of ${data.length > 0 ? data[0].DATE : date} ~2:00pm CST`)
     }
     fetchInitial()
     return () => {}
@@ -75,19 +81,16 @@ function Outbreak() {
   async function accessCache(date) {
     let data
     if (cachedData[date]) {
-      // console.log('oh, i already has that:', cachedData[date])
       data = cachedData[date]
     } else {
-      // console.log('lemme fetch that for u bc this is all i has:', cachedData)
       data = await execFetch(date)
-      // console.log('i fetched some data for u:', data)
       setCachedData(cachedData => {
         return { ...cachedData, [date]: data }
       })
     }
     setData(data)
     if (data.length > 0) {
-      setInfoText(`As of ${data[0].DATE} ~2:00pm CST`)
+      setInfoText(`as of ${data[0].DATE} ~2:00pm CST`)
     } else {
       setInfoText(`No data available for ${date}`)
     }
@@ -100,7 +103,7 @@ function Outbreak() {
       const selectedDate = format(date, 'M/d/yyyy')
       if (isAfter(date, new Date()) || isAfter(new Date('2/5/2020'), date)) {
         setData([])
-        setInfoText(`As of ${selectedDate} ~2:00pm CST`)
+        setInfoText(`as of ${selectedDate} ~2:00pm CST`)
       } else {
         accessCache(selectedDate)
       }
@@ -122,6 +125,9 @@ function Outbreak() {
       '&:after': {
         borderBottom: '1px solid white'
       }
+    },
+    helperText: {
+      display: 'none'
     }
   })
 
@@ -133,14 +139,23 @@ function Outbreak() {
         {/* Primary Meta Tags */}
         <title>WI Covid-19 Outbreak</title>
         <meta name="title" content="WI Covid-19 Outbreak" />
-        <meta name="description" content="Visualized Covid-19 outbreak in Wisconsin" />
+        <meta
+          name="description"
+          content="Visualized Covid-19 outbreak in Wisconsin"
+        />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={process.env.PUBLIC_URL} />
         <meta property="og:title" content="WI Covid-19 Outbreak" />
-        <meta property="og:description" content="Visualized Covid-19 outbreak in Wisconsin" />
-        <meta property="og:image" content={`${process.env.PUBLIC_URL}/outbreak.png`} />
+        <meta
+          property="og:description"
+          content="Visualized Covid-19 outbreak in Wisconsin"
+        />
+        <meta
+          property="og:image"
+          content={`${process.env.PUBLIC_URL}/outbreak.png`}
+        />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
@@ -150,9 +165,12 @@ function Outbreak() {
           property="twitter:description"
           content="Visualized Covid-19 outbreak in Wisconsin"
         />
-        <meta property="twitter:image" content={`${process.env.PUBLIC_URL}/outbreak.png`} />
+        <meta
+          property="twitter:image"
+          content={`${process.env.PUBLIC_URL}/outbreak.png`}
+        />
       </MetaTags>
-      <h1 className="Outbreak-title">POSITIVE COVID-19 CASES BY COUNTY</h1>
+      <h1 className="Outbreak-title">POSITIVE COVID-19 CASES</h1>
       <div className="Outbreak-date-picker-wrapper">
         <IconButton
           aria-label="Previous"
@@ -165,10 +183,11 @@ function Outbreak() {
             InputProps={{
               classes: { root: classes.input, underline: classes.underline }
             }}
+            FormHelperTextProps={{ classes: { root: classes.helperText } }}
             disableToolbar
             variant="outlined"
             format="MM/dd/yyyy"
-            margin="normal"
+            margin="none"
             id="date-picker-inline"
             value={selectedDate}
             onChange={handleDateChange}
@@ -184,15 +203,22 @@ function Outbreak() {
         </IconButton>
       </div>
       <OutbreakMap data={data ? data : []} className="align-center" />
+      <h1 className="Outbreak-title Outbreak-total">{totalCases}</h1>
       {infoText && <h2 className="Outbreak-text">{infoText}</h2>}
       <Container maxWidth="xs">
         <TableContainer className="Outbreak-table-container" component={Paper}>
           <Table id="outbreak-table" size="small">
             <TableHead>
               <TableRow>
-                <TableCell>County</TableCell>
-                <TableCell>Cases</TableCell>
-                <TableCell>Deaths</TableCell>
+                <TableCell>
+                  <strong>County</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>Cases</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>Deaths</strong>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -209,6 +235,19 @@ function Outbreak() {
                     </TableCell>
                   </TableRow>
                 ))}
+              {data && data.length > 0 && (
+                <TableRow key={'total-row'}>
+                  <TableCell align="left">
+                    <strong>Total</strong>
+                  </TableCell>
+                  <TableCell align="right">
+                    <strong>{totalCases}</strong>
+                  </TableCell>
+                  <TableCell align="right">
+                    <strong>{totalDeaths}</strong>
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
