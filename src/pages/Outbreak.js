@@ -1,5 +1,5 @@
 import 'date-fns'
-import { format, isAfter } from 'date-fns'
+import { format, isAfter, addDays } from 'date-fns'
 import React, { useState, useEffect } from 'react'
 import Logo from '../components/Main/Logo'
 import '../App.css'
@@ -15,8 +15,11 @@ import {
   TableBody,
   Paper,
   Container,
-  Link
+  Link,
+  IconButton
 } from '@material-ui/core'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   MuiPickersUtilsProvider,
@@ -72,7 +75,7 @@ function Outbreak() {
     let data
     if (cachedData[date]) {
       // console.log('oh, i already has that:', cachedData[date])
-      data = (cachedData[date])
+      data = cachedData[date]
     } else {
       // console.log('lemme fetch that for u bc this is all i has:', cachedData)
       data = await execFetch(date)
@@ -105,8 +108,8 @@ function Outbreak() {
 
   const useStyles = makeStyles({
     root: {
-      width: '12em'
-      // marginBottom: '2em'
+      width: '12em',
+      marginTop: 0
     },
     input: {
       color: 'white',
@@ -127,6 +130,9 @@ function Outbreak() {
     <div className="Outbreak align-center">
       <h1 className="Outbreak-title">POSITIVE COVID-19 CASES BY COUNTY</h1>
       <div className="Outbreak-date-picker-wrapper">
+        <IconButton aria-label="Previous" onClick={() => handleDateChange(addDays(selectedDate, -1))}>
+          <NavigateBeforeIcon />
+        </IconButton>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker
             classes={{ root: classes.root }}
@@ -145,6 +151,9 @@ function Outbreak() {
             }}
           />
         </MuiPickersUtilsProvider>
+        <IconButton aria-label="Next" onClick={() => handleDateChange(addDays(selectedDate, 1))}>
+          <NavigateNextIcon />
+        </IconButton>
       </div>
       <OutbreakMap data={data} className="align-center" />
       {infoText && <h2 className="Outbreak-text">{infoText}</h2>}
