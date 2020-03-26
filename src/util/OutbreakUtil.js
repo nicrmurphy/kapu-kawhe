@@ -29,20 +29,30 @@ export async function fetchDHS() {
   return res ? res.features.map(county => county.attributes) : null
 }
 
+const getChromaScale = palette => {
+  switch (palette) {
+    default:
+    case 'cool':
+      return chroma.scale(['#dcedc8', '#42b3d5', '#1a273e']).mode('lch') // cool
+    case 'warm':
+      return chroma.scale(['#feeb65', '#e4521b', '#4d342f']).mode('lch') // warm
+    case 'neon':
+      return chroma.scale(['#ffecb3', '#e85285', '#6a1b9a']).mode('lch') // neon
+    case 'go pack go':
+      return chroma.scale(['#fafa6e', '#2A4858']).mode('lch') // packers
+  }
+}
+
 // set colors of dataset
-export function setPalette(data) {
-  // const scale = chroma.scale(['#fafa6e', '#2A4858']).mode('lch')
-  // const scale = chroma.scale(['#feeb65','#e4521b', '#4d342f']).mode('lch') // warm
-  const scale = chroma.scale(['#dcedc8','#42b3d5', '#1a273e']).mode('lch') // cool
-  // const scale = chroma.scale(['#ffecb3','#e85285', '#6a1b9a']).mode('lch') // neon
-  // const scale = chroma.scale(chroma.brewer.OrRd).mode('lch') // red
-  if (data && !data[0].COLOR) {
-    return data.map((county, i) => {
-      const palette = scale.domain([data.length - 1, 0])
-      county.COLOR = palette(i)
-      // console.log(county.NAME, county.POSITIVE, county.COLOR.rgb())
+export function setPalette(data, palette) {
+  const scale = getChromaScale(palette)
+  if (data && data.palette !== palette) {
+    data = data.map((county, i) => {
+      const palette = scale.domain([0, Math.log10(data[0].POSITIVE)])
+      county.COLOR = palette(Math.log10(county.POSITIVE))
       return county
     })
+    data.palette = palette
   }
   return data
 }

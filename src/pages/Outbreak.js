@@ -8,7 +8,13 @@ import OutbreakDatePicker from '../components/Outbreak/OutbreakDatePicker'
 import OutbreakMap from 'wi-outbreak'
 import OutbreakLineChart from '../components/Outbreak/OutbreakLineChart'
 import OutbreakTable from '../components/Outbreak/OutbreakTable'
-import { execFetch, fetchDHS, fetchJSON, setPalette } from '../util/OutbreakUtil'
+import OutbreakPaletteSelector from '../components/Outbreak/OutbreakPaletteSelector'
+import {
+  execFetch,
+  fetchDHS,
+  fetchJSON,
+  setPalette
+} from '../util/OutbreakUtil'
 import {
   Paper,
   Link,
@@ -18,12 +24,15 @@ import {
   FormControlLabel
 } from '@material-ui/core'
 
+const initialPalette = 'cool'
+
 function Outbreak() {
   const [data, setData] = useState(null)
   const [cachedData, setCachedData] = useState({})
   const [infoText, setInfoText] = useState('')
   const [selectedDate, setSelectedDate] = useState(new Date())
 
+  const [selectedPalette, setSelectedPalette] = useState(initialPalette)
   const [renderChart, setRenderChart] = useState(false)
   const [chartLabels, setChartLabels] = useState([])
   const [logarithmic, setLogarithmic] = useState(false)
@@ -74,7 +83,7 @@ function Outbreak() {
       }
 
       setCachedData(cachedData)
-      setData(setPalette(cachedData[today]))
+      setData(setPalette(cachedData[today], initialPalette))
       setInfoText(`as of ${cachedData[today][0].DATE} ~2:00pm CST`)
       setRenderChart(true)
     }
@@ -92,8 +101,14 @@ function Outbreak() {
         return { ...cachedData, [date]: data }
       })
     }
-
-    setData(setPalette(data))
+    if (data.palette !== selectedPalette) {
+      data = setPalette(data, selectedPalette)
+      // console.log(data)
+      setCachedData(cachedData => {
+        return { ...cachedData, [date]: data }
+      })
+    }
+    setData(data)
     if (data.length > 0) {
       setInfoText(`as of ${data[0].DATE} ~2:00pm CST`)
     } else {
@@ -115,6 +130,11 @@ function Outbreak() {
     }
   }
 
+  const handlePaletteChange = palette => {
+    setSelectedPalette(palette)
+    setData(data => setPalette(data, palette))
+  }
+
   return (
     <div className="Outbreak-background">
       <div className="Outbreak align-center">
@@ -129,6 +149,14 @@ function Outbreak() {
             <div className="align-center">
               <div className="Outbreak-map-container">
                 <OutbreakMap data={data ? data : []} />
+                <div className="Outbreak-palette-selector-container">
+                <div className="Outbreak-palette-selector">
+                  <OutbreakPaletteSelector
+                    palette={selectedPalette}
+                    setPalette={handlePaletteChange}
+                  />
+                </div>
+                </div>
               </div>
               {renderChart && screenWidth >= 960 && (
                 <Paper>
@@ -197,11 +225,11 @@ function Outbreak() {
                       marginRight: '.5em',
                       paddingBottom: '.5em'
                     }}>
-                  <OutbreakLineChart
-                    labels={chartLabels}
-                    data={cachedData}
-                    logarithmic={logarithmic}
-                  />
+                    <OutbreakLineChart
+                      labels={chartLabels}
+                      data={cachedData}
+                      logarithmic={logarithmic}
+                    />
                   </div>
                   <div
                     style={{

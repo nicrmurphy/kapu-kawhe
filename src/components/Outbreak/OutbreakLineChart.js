@@ -48,8 +48,6 @@ function OutbreakLineChart({ labels, data, logarithmic }) {
   const [chartData, setChartData] = useState([])
 
   useEffect(() => {
-    // console.log('line chart data:', data)
-
     // build chart labels
     const min = format(new Date('3/9/2020'), 'M/d/yyyy')
     const minIndex = labels.indexOf(min)
@@ -69,7 +67,7 @@ function OutbreakLineChart({ labels, data, logarithmic }) {
     const chartData = []
     chartData.push(buildDataset('Total', totals, 'green'))
     for (const [key, entry] of Object.entries(data[today])) {
-      if (entry.POSITIVE < 2) {
+      if (key === 'palette' || entry.POSITIVE < 2) {
         continue
       }
       const cases = []

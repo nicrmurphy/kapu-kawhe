@@ -101,7 +101,28 @@
   margin: auto;
 }
 
+.Outbreak-palette-selector-container {
+  height: 1px;
+}
+
+ .Outbreak-palette-selector {
+  position: relative;
+  transform: translateY(-150%);
+  width: 9em;
+  padding-top: .5em;
+  padding-bottom: .5em;
+  /* background-color: #A0AFBC; */
+} 
+
 /* TODO: don't override this way */
 .MuiSvgIcon-root {
   color: white;
+}
+
+.MuiSelect-icon {
+  color: white !important;
+}
+
+.MuiFormLabel-filled {
+  color: white !important;
 }
