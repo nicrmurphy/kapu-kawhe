@@ -1,66 +1,24 @@
-import 'date-fns'
-import { format, isAfter, addDays } from 'date-fns'
+import { format, isAfter } from 'date-fns'
 import React, { useState, useEffect } from 'react'
-import MetaTags from 'react-meta-tags'
 import Logo from '../components/Main/Logo'
 import '../App.css'
-import OutbreakMap from 'wi-outbreak'
 import { apiLocation, dbRoute } from '../env'
-import DateFnsUtils from '@date-io/date-fns'
-import {
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Paper,
-  Container,
-  Link,
-  IconButton
-} from '@material-ui/core'
-import NavigateNextIcon from '@material-ui/icons/NavigateNext'
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
-import { makeStyles } from '@material-ui/core/styles'
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from '@material-ui/pickers'
-
-async function execFetch(date) {
-  // const url = `${apiLocation}${dbRoute}?state=wi&date=${date}`
-  const queryString = `?state=wi${date ? `&date=${date}` : ''}`
-  const url = `${apiLocation}${dbRoute}${queryString}`
-  const today = format(new Date(), 'M/d/yyyy')
-  try {
-    let res = await fetch(url)
-    let data = await res.json()
-
-    if (data.length === 0 && date === today) {
-      data = await fetchDHS()
-    }
-    return data
-  } catch (err) {
-    console.log(err)
-  }
-}
-
-async function fetchDHS() {
-  const url = 'https://cors-anywhere.herokuapp.com/https://bit.ly/3a5VWXQ'
-  try {
-    let res = await fetch(url)
-    res = await res.json()
-    return res.features.map(county => county.attributes)
-  } catch (err) {
-    console.log(err)
-  }
-}
+import OutbreakMetaTags from '../components/Outbreak/OutbreakMetaTags'
+import OutbreakDatePicker from '../components/Outbreak/OutbreakDatePicker'
+import OutbreakMap from 'wi-outbreak'
+import OutbreakLineChart from '../components/Outbreak/OutbreakLineChart'
+import OutbreakTable from '../components/Outbreak/OutbreakTable'
+import { execFetch, fetchDHS, fetchJSON } from '../util/OutbreakUtil'
+import { Paper, Link, Grid } from '@material-ui/core'
 
 function Outbreak() {
   const [data, setData] = useState(null)
   const [cachedData, setCachedData] = useState({})
   const [infoText, setInfoText] = useState('')
   const [selectedDate, setSelectedDate] = useState(new Date())
+
+  const [renderChart, setRenderChart] = useState(false)
+  const [chartLabels, setChartLabels] = useState([])
 
   const sumArr = (sum, val) => sum + val
   const totalCases =
@@ -70,10 +28,14 @@ function Outbreak() {
 
   useEffect(() => {
     async function fetchInitial() {
+      const url = `${apiLocation}${dbRoute}/dates?state=wi`
+      const chartLabels = await fetchJSON(url)
+      setChartLabels(chartLabels)
+
       const data = await execFetch()
       const cachedData = {}
-      for (const i in data) {
-        const doc = data[i]
+      for (const doc of data) {
+        // add to cache
         if (!cachedData[doc.DATE]) {
           cachedData[doc.DATE] = [doc]
         } else {
@@ -88,6 +50,7 @@ function Outbreak() {
       setCachedData(cachedData)
       setData(cachedData[today])
       setInfoText(`as of ${cachedData[today][0].DATE} ~2:00pm CST`)
+      setRenderChart(true)
     }
     fetchInitial()
     return () => {}
@@ -125,159 +88,53 @@ function Outbreak() {
     }
   }
 
-  const useStyles = makeStyles({
-    root: {
-      width: '12em',
-      marginTop: 0
-    },
-    input: {
-      color: 'white',
-      borderColor: 'white',
-      fontSize: 'calc(10px + 2vmin)'
-    },
-    underline: {
-      borderBottom: '1px solid white',
-      '&:after': {
-        borderBottom: '1px solid white'
-      }
-    },
-    helperText: {
-      display: 'none'
-    }
-  })
-
-  const classes = useStyles()
-
   return (
-    <div className="Outbreak align-center">
-      <MetaTags>
-        {/* Primary Meta Tags */}
-        <title>WI Covid-19 Outbreak</title>
-        <meta name="title" content="WI Covid-19 Outbreak" />
-        <meta
-          name="description"
-          content="Visualized Covid-19 outbreak in Wisconsin"
+    <div className="Outbreak-background">
+      <div className="Outbreak">
+        <OutbreakMetaTags />
+        <h1 className="Outbreak-title">POSITIVE COVID-19 CASES</h1>
+        <OutbreakDatePicker
+          handleDateChange={handleDateChange}
+          selectedDate={selectedDate}
         />
-
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={process.env.PUBLIC_URL} />
-        <meta property="og:title" content="WI Covid-19 Outbreak" />
-        <meta
-          property="og:description"
-          content="Visualized Covid-19 outbreak in Wisconsin"
-        />
-        <meta
-          property="og:image"
-          content={`${process.env.PUBLIC_URL}/outbreak.png`}
-        />
-
-        {/* Twitter */}
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={process.env.PUBLIC_URL} />
-        <meta property="twitter:title" content="WI Covid-19 Outbreak" />
-        <meta
-          property="twitter:description"
-          content="Visualized Covid-19 outbreak in Wisconsin"
-        />
-        <meta
-          property="twitter:image"
-          content={`${process.env.PUBLIC_URL}/outbreak.png`}
-        />
-      </MetaTags>
-      <h1 className="Outbreak-title">POSITIVE COVID-19 CASES</h1>
-      <div className="Outbreak-date-picker-wrapper">
-        <IconButton
-          aria-label="Previous"
-          onClick={() => handleDateChange(addDays(selectedDate, -1))}>
-          <NavigateBeforeIcon />
-        </IconButton>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <KeyboardDatePicker
-            classes={{ root: classes.root }}
-            InputProps={{
-              classes: { root: classes.input, underline: classes.underline }
-            }}
-            FormHelperTextProps={{ classes: { root: classes.helperText } }}
-            disableToolbar
-            variant="outlined"
-            format="MM/dd/yyyy"
-            margin="none"
-            id="date-picker-inline"
-            value={selectedDate}
-            onChange={handleDateChange}
-            KeyboardButtonProps={{
-              'aria-label': 'change date'
-            }}
-          />
-        </MuiPickersUtilsProvider>
-        <IconButton
-          aria-label="Next"
-          onClick={() => handleDateChange(addDays(selectedDate, 1))}>
-          <NavigateNextIcon />
-        </IconButton>
-      </div>
-      <OutbreakMap data={data ? data : []} className="align-center" />
-      <h1 className="Outbreak-title Outbreak-total">{totalCases}</h1>
-      {infoText && <h2 className="Outbreak-text">{infoText}</h2>}
-      <Container maxWidth="xs">
-        <TableContainer className="Outbreak-table-container" component={Paper}>
-          <Table id="outbreak-table" size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <strong>County</strong>
-                </TableCell>
-                <TableCell>
-                  <strong>Cases</strong>
-                </TableCell>
-                <TableCell>
-                  <strong>Deaths</strong>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data &&
-                data.map(county => (
-                  <TableRow key={county.GEOID}>
-                    <TableCell align="left">
-                      {county.NAME}
-                      {county.CMNTY_SPRD && '*'}
-                    </TableCell>
-                    <TableCell align="right">{county.POSITIVE}</TableCell>
-                    <TableCell align="right">
-                      {county.DEATHS ? county.DEATHS : ''}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              {data && data.length > 0 && (
-                <TableRow key={'total-row'}>
-                  <TableCell align="left">
-                    <strong>Total</strong>
-                  </TableCell>
-                  <TableCell align="right">
-                    <strong>{totalCases}</strong>
-                  </TableCell>
-                  <TableCell align="right">
-                    <strong>{totalDeaths}</strong>
-                  </TableCell>
-                </TableRow>
+        <Grid container alignItems="flex-start">
+          <Grid item xs={12} sm={6}>
+            <div className="align-center">
+              <OutbreakMap data={data ? data : []} className="" />
+              {renderChart && window.innerWidth >= 600 && (
+                <Paper
+                  style={{ height: '75vh', padding: '1em', margin: '1em' }}>
+                  <OutbreakLineChart labels={chartLabels} data={cachedData} />
+                </Paper>
               )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Container>
-      <h2 className="Outbreak-text">
-        Source:{' '}
-        <Link
-          className="Outbreak-link"
-          color="initial"
-          href="https://www.dhs.wisconsin.gov/outbreaks/index.htm">
-          Wisconsin Department of Health Services
-        </Link>
-      </h2>
-      <div className="Outbreak-logo-wrapper">
-        <Logo className="align-center" size="sm" clickable={true} />
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <div className="align-center">
+              <h1 className="Outbreak-title Outbreak-total">{totalCases}</h1>
+              {infoText && <h2 className="Outbreak-text">{infoText}</h2>}
+              <OutbreakTable data={data} totals={[totalCases, totalDeaths]} />
+              {renderChart && window.innerWidth < 600 && (
+                <Paper
+                  style={{ height: '75vmin', padding: '1em', margin: '1em' }}>
+                  <OutbreakLineChart labels={chartLabels} data={cachedData} />
+                </Paper>
+              )}
+            </div>
+          </Grid>
+        </Grid>
+        <h2 className="Outbreak-text">
+          Source:{' '}
+          <Link
+            className="Outbreak-link"
+            color="initial"
+            href="https://www.dhs.wisconsin.gov/outbreaks/index.htm">
+            Wisconsin Department of Health Services
+          </Link>
+        </h2>
+        <div className="Outbreak-logo-wrapper">
+          <Logo className="align-center" size="sm" clickable={true} />
+        </div>
       </div>
     </div>
   )

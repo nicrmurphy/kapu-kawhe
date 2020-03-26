@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const { format } = require('date-fns')
+
 const app = require('express')()
 const {
   clientOrigin,
@@ -58,6 +60,22 @@ client
             return
           }
           res.send(result)
+        })
+    })
+
+    app.get(`${dbRoute}/dates`, (req, res) => {
+      const { state } = req.query
+      const collection = client.db(dbName).collection(state)
+      collection
+        .distinct('DATE')
+        .then(dates => {
+          res.send(
+            dates
+              .map(date => format(new Date(date), 'MM/dd/yyyy'))
+              .sort()
+              .map(date => format(new Date(date), 'M/d/yyyy'))
+              // .map(date => format(new Date(date), 'MMM d'))
+          )
         })
     })
 
