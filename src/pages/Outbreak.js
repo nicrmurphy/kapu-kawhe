@@ -1,4 +1,4 @@
-import { format, isAfter } from 'date-fns'
+import { format, isAfter, addDays } from 'date-fns'
 import React, { useState, useEffect } from 'react'
 import Logo from '../components/Main/Logo'
 import '../App.css'
@@ -8,7 +8,7 @@ import OutbreakDatePicker from '../components/Outbreak/OutbreakDatePicker'
 import OutbreakMap from 'wi-outbreak'
 import OutbreakLineChart from '../components/Outbreak/OutbreakLineChart'
 import OutbreakTable from '../components/Outbreak/OutbreakTable'
-import { execFetch, fetchDHS, fetchJSON } from '../util/OutbreakUtil'
+import { execFetch, fetchDHS, fetchJSON, setPalette } from '../util/OutbreakUtil'
 import {
   Paper,
   Link,
@@ -67,10 +67,14 @@ function Outbreak() {
       const today = format(new Date(), 'M/d/yyyy')
       if (!cachedData[today]) {
         cachedData[today] = await fetchDHS()
+        if (!cachedData[today]) {
+          const yesterday = format(addDays(new Date(), -1), 'M/d/yyyy')
+          cachedData[today] = cachedData[yesterday]
+        }
       }
 
       setCachedData(cachedData)
-      setData(cachedData[today])
+      setData(setPalette(cachedData[today]))
       setInfoText(`as of ${cachedData[today][0].DATE} ~2:00pm CST`)
       setRenderChart(true)
     }
@@ -88,7 +92,8 @@ function Outbreak() {
         return { ...cachedData, [date]: data }
       })
     }
-    setData(data)
+
+    setData(setPalette(data))
     if (data.length > 0) {
       setInfoText(`as of ${data[0].DATE} ~2:00pm CST`)
     } else {

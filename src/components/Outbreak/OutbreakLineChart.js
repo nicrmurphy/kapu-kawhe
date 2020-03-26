@@ -67,8 +67,9 @@ function OutbreakLineChart({ labels, data, logarithmic }) {
     // build data sets
     const today = format(new Date(), 'M/d/yyyy')
     const chartData = []
+    chartData.push(buildDataset('Total', totals, 'green'))
     for (const [key, entry] of Object.entries(data[today])) {
-      if (entry.POSITIVE < 5) {
+      if (entry.POSITIVE < 2) {
         continue
       }
       const cases = []
@@ -127,8 +128,8 @@ function OutbreakLineChart({ labels, data, logarithmic }) {
                   }
                 }
               : {
-                type: 'linear'
-              }
+                  type: 'linear'
+                }
           ]
         }
       }}
