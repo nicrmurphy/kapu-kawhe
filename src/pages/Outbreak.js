@@ -9,7 +9,14 @@ import OutbreakMap from 'wi-outbreak'
 import OutbreakLineChart from '../components/Outbreak/OutbreakLineChart'
 import OutbreakTable from '../components/Outbreak/OutbreakTable'
 import { execFetch, fetchDHS, fetchJSON } from '../util/OutbreakUtil'
-import { Paper, Link, Grid } from '@material-ui/core'
+import {
+  Paper,
+  Link,
+  Grid,
+  Switch,
+  FormGroup,
+  FormControlLabel
+} from '@material-ui/core'
 
 function Outbreak() {
   const [data, setData] = useState(null)
@@ -19,15 +26,19 @@ function Outbreak() {
 
   const [renderChart, setRenderChart] = useState(false)
   const [chartLabels, setChartLabels] = useState([])
-  
+  const [logarithmic, setLogarithmic] = useState(false)
+
   const [screenWidth, setScreenWidth] = useState(window.innerWidth)
 
-  useEffect(() => { // TODO: throttle listener
-    window.addEventListener('resize', () => {
-      setScreenWidth(window.innerWidth)
-    })
+  const handleResize = () => {
+    setScreenWidth(window.innerWidth)
+  }
+
+  useEffect(() => {
+    // TODO: throttle listener
+    window.addEventListener('resize', handleResize)
     return () => {
-      window.removeEventListener('resize')
+      window.removeEventListener('resize', handleResize)
     }
   }, [])
 
@@ -115,14 +126,47 @@ function Outbreak() {
                 <OutbreakMap data={data ? data : []} />
               </div>
               {renderChart && screenWidth >= 960 && (
-                <Paper
-                  style={{
-                    height: '75vh',
-                    maxHeight: '120vmin',
-                    padding: '.5em',
-                    margin: '.5em'
-                  }}>
-                  <OutbreakLineChart labels={chartLabels} data={cachedData} />
+                <Paper>
+                  <h2
+                    className="align-center"
+                    style={{ paddingTop: '.5em', paddingBottom: '.5em' }}>
+                    Positive COVID-19 Cases in WI
+                  </h2>
+                  <div
+                    className="Outbreak-chart-container"
+                    style={{
+                      height: '75vh',
+                      maxHeight: '120vmin',
+                      marginLeft: '.5em',
+                      marginRight: '.5em',
+                      paddingBottom: '.5em'
+                    }}>
+                    <OutbreakLineChart
+                      labels={chartLabels}
+                      data={cachedData}
+                      logarithmic={logarithmic}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      paddingTop: '.5em',
+                      marginBottom: '.5em',
+                      paddingLeft: '1em'
+                    }}>
+                    <FormGroup className="align-center" row>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={logarithmic}
+                            onChange={() => setLogarithmic(prev => !prev)}
+                            value="logarithmic"
+                            color="primary"
+                          />
+                        }
+                        label="Logarithmic Scale"
+                      />
+                    </FormGroup>
+                  </div>
                 </Paper>
               )}
             </div>
@@ -133,14 +177,47 @@ function Outbreak() {
               {infoText && <h2 className="Outbreak-text">{infoText}</h2>}
               <OutbreakTable data={data} totals={[totalCases, totalDeaths]} />
               {renderChart && screenWidth < 960 && (
-                <Paper
-                  style={{
-                    height: '90vh',
-                    maxHeight: '120vmin',
-                    padding: '.5em',
-                    margin: '.5em'
-                  }}>
-                  <OutbreakLineChart labels={chartLabels} data={cachedData} />
+                <Paper>
+                  <h2
+                    className="align-center"
+                    style={{ paddingTop: '.5em', paddingBottom: '.5em' }}>
+                    Positive COVID-19 Cases in WI
+                  </h2>
+                  <div
+                    className="Outbreak-chart-container"
+                    style={{
+                      height: '90vh',
+                      maxHeight: '120vmin',
+                      marginLeft: '.5em',
+                      marginRight: '.5em',
+                      paddingBottom: '.5em'
+                    }}>
+                  <OutbreakLineChart
+                    labels={chartLabels}
+                    data={cachedData}
+                    logarithmic={logarithmic}
+                  />
+                  </div>
+                  <div
+                    style={{
+                      paddingTop: '.5em',
+                      marginBottom: '.5em',
+                      paddingLeft: '1em'
+                    }}>
+                    <FormGroup className="align-center" row>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={logarithmic}
+                            onChange={() => setLogarithmic(prev => !prev)}
+                            value="logarithmic"
+                            color="primary"
+                          />
+                        }
+                        label="Logarithmic Scale"
+                      />
+                    </FormGroup>
+                  </div>
                 </Paper>
               )}
             </div>
