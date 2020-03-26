@@ -19,6 +19,17 @@ function Outbreak() {
 
   const [renderChart, setRenderChart] = useState(false)
   const [chartLabels, setChartLabels] = useState([])
+  
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+
+  useEffect(() => { // TODO: throttle listener
+    window.addEventListener('resize', () => {
+      setScreenWidth(window.innerWidth)
+    })
+    return () => {
+      window.removeEventListener('resize')
+    }
+  }, [])
 
   const sumArr = (sum, val) => sum + val
   const totalCases =
@@ -90,7 +101,7 @@ function Outbreak() {
 
   return (
     <div className="Outbreak-background">
-      <div className="Outbreak">
+      <div className="Outbreak align-center">
         <OutbreakMetaTags />
         <h1 className="Outbreak-title">POSITIVE COVID-19 CASES</h1>
         <OutbreakDatePicker
@@ -98,25 +109,37 @@ function Outbreak() {
           selectedDate={selectedDate}
         />
         <Grid container alignItems="flex-start">
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={7}>
             <div className="align-center">
-              <OutbreakMap data={data ? data : []} className="" />
-              {renderChart && window.innerWidth >= 600 && (
+              <div className="Outbreak-map-container">
+                <OutbreakMap data={data ? data : []} />
+              </div>
+              {renderChart && screenWidth >= 960 && (
                 <Paper
-                  style={{ height: '75vh', padding: '1em', margin: '1em' }}>
+                  style={{
+                    height: '75vh',
+                    maxHeight: '120vmin',
+                    padding: '.5em',
+                    margin: '.5em'
+                  }}>
                   <OutbreakLineChart labels={chartLabels} data={cachedData} />
                 </Paper>
               )}
             </div>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} md={5}>
             <div className="align-center">
               <h1 className="Outbreak-title Outbreak-total">{totalCases}</h1>
               {infoText && <h2 className="Outbreak-text">{infoText}</h2>}
               <OutbreakTable data={data} totals={[totalCases, totalDeaths]} />
-              {renderChart && window.innerWidth < 600 && (
+              {renderChart && screenWidth < 960 && (
                 <Paper
-                  style={{ height: '75vmin', padding: '1em', margin: '1em' }}>
+                  style={{
+                    height: '90vh',
+                    maxHeight: '120vmin',
+                    padding: '.5em',
+                    margin: '.5em'
+                  }}>
                   <OutbreakLineChart labels={chartLabels} data={cachedData} />
                 </Paper>
               )}

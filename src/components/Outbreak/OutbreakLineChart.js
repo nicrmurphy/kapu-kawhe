@@ -66,6 +66,7 @@ function OutbreakLineChart({ labels, data, logarithmic }) {
     // build data sets
     const today = format(new Date(), 'M/d/yyyy')
     const chartData = []
+    console.log('entering nested loops...')
     for (const [key, entry] of Object.entries(data[today])) {
       if (entry.POSITIVE < 5) {
         continue
