@@ -13,7 +13,7 @@ import {
 
 const useStyles = makeStyles({
   root: {
-    width: window.innerWidth < 480 ? '10em' : '14em',
+    width: window.innerWidth < 480 ? '9.5em' : '14em',
     marginTop: 0
   },
   input: {

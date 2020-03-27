@@ -10,7 +10,6 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: #feffff;
-  /* background-color: #3aafa9; */
   background-image: linear-gradient(#30908b, #3aafa9);
 }
 
@@ -105,14 +104,17 @@
   height: 1px;
 }
 
- .Outbreak-palette-selector {
+.Outbreak-palette-selector {
   position: relative;
   transform: translateY(-150%);
   width: 9em;
-  padding-top: .5em;
-  padding-bottom: .5em;
-  /* background-color: #A0AFBC; */
 } 
+
+@media only screen and (max-width: 600px) {
+  .Outbreak-palette-selector {
+    transform: translateY(-80%);
+  } 
+}
 
 /* TODO: don't override this way */
 .MuiSvgIcon-root {
