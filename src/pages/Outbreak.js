@@ -56,6 +56,8 @@ function Outbreak() {
     data && data.length > 0 ? data.map(c => c.POSITIVE).reduce(sumArr) : ''
   const totalDeaths =
     data && data.length > 0 ? data.map(c => c.DEATHS).reduce(sumArr) : ''
+  const totalNegative =
+    data && data.length > 0 ? data.map(c => c.NEGATIVE).reduce(sumArr) : ''
 
   useEffect(() => {
     async function fetchInitial() {
@@ -150,12 +152,12 @@ function Outbreak() {
               <div className="Outbreak-map-container">
                 <OutbreakMap data={data ? data : []} />
                 <div className="Outbreak-palette-selector-container">
-                <div className="Outbreak-palette-selector">
-                  <OutbreakPaletteSelector
-                    palette={selectedPalette}
-                    setPalette={handlePaletteChange}
-                  />
-                </div>
+                  <div className="Outbreak-palette-selector">
+                    <OutbreakPaletteSelector
+                      palette={selectedPalette}
+                      setPalette={handlePaletteChange}
+                    />
+                  </div>
                 </div>
               </div>
               {renderChart && screenWidth >= 960 && (
@@ -208,7 +210,10 @@ function Outbreak() {
             <div className="align-center">
               <h1 className="Outbreak-title Outbreak-total">{totalCases}</h1>
               {infoText && <h2 className="Outbreak-text">{infoText}</h2>}
-              <OutbreakTable data={data} totals={[totalCases, totalDeaths]} />
+              <OutbreakTable
+                data={data}
+                totals={[totalCases, totalDeaths, totalNegative]}
+              />
               {renderChart && screenWidth < 960 && (
                 <Paper>
                   <h2
