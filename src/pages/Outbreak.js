@@ -24,7 +24,7 @@ import {
   FormControlLabel
 } from '@material-ui/core'
 
-const initialPalette = 'cool'
+const initialPalette = 'warm'
 
 function Outbreak() {
   const [data, setData] = useState(null)
