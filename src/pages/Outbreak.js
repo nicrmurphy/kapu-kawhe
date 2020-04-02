@@ -86,7 +86,7 @@ function Outbreak() {
 
       setCachedData(cachedData)
       setData(setPalette(cachedData[today], initialPalette))
-      setInfoText(`as of ${cachedData[today][0].DATE} ~2:00pm CST`)
+      setInfoText(`as of ${format(new Date(cachedData[today][0].DATE), 'M/d/yyyy')} ~2:00pm CST`)
       setRenderChart(true)
     }
     fetchInitial()
@@ -112,7 +112,7 @@ function Outbreak() {
     }
     setData(data)
     if (data.length > 0) {
-      setInfoText(`as of ${data[0].DATE} ~2:00pm CST`)
+      setInfoText(`as of ${format(new Date(data[0].DATE), 'M/d/yyyy')} ~2:00pm CST`)
     } else {
       setInfoText(`No data available for ${date}`)
     }
