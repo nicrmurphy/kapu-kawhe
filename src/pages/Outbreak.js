@@ -78,6 +78,9 @@ function Outbreak() {
       const today = format(new Date(), 'M/d/yyyy')
       if (!cachedData[today]) {
         cachedData[today] = await fetchDHS()
+        cachedData[today] = cachedData[today].map(c => {
+          return { ...c, DATE: format(new Date(c.DATE), 'M/d/yyyy') }
+        })
         if (!cachedData[today]) {
           const yesterday = format(addDays(new Date(), -1), 'M/d/yyyy')
           cachedData[today] = cachedData[yesterday]
@@ -86,7 +89,12 @@ function Outbreak() {
 
       setCachedData(cachedData)
       setData(setPalette(cachedData[today], initialPalette))
-      setInfoText(`as of ${format(new Date(cachedData[today][0].DATE), 'M/d/yyyy')} ~2:00pm CST`)
+      setInfoText(
+        `as of ${format(
+          new Date(cachedData[today][0].DATE),
+          'M/d/yyyy'
+        )} ~2:00pm CST`
+      )
       setRenderChart(true)
     }
     fetchInitial()
@@ -112,7 +120,9 @@ function Outbreak() {
     }
     setData(data)
     if (data.length > 0) {
-      setInfoText(`as of ${format(new Date(data[0].DATE), 'M/d/yyyy')} ~2:00pm CST`)
+      setInfoText(
+        `as of ${format(new Date(data[0].DATE), 'M/d/yyyy')} ~2:00pm CST`
+      )
     } else {
       setInfoText(`No data available for ${date}`)
     }
