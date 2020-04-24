@@ -17,7 +17,7 @@ export async function execFetch(date) {
   const today = format(new Date(), 'M/d/yyyy')
   let data = await fetchJSON(url)
 
-  if (data.length === 0 && date === today) {
+  if (!data || (data.length === 0 && date === today)) {
     data = await fetchDHS()
   }
   return data
@@ -26,7 +26,14 @@ export async function execFetch(date) {
 export async function fetchDHS() {
   const url = 'https://cors-anywhere.herokuapp.com/https://bit.ly/3dqNGE1'
   let res = await fetchJSON(url)
-  return res ? res.features.map(county => county.attributes) : null
+  return res
+    ? res.features.map(county => {
+        const c = county.attributes
+        c.DATE = format(new Date(), 'M/d/yyyy')
+        delete c.LoadDttm
+        return c
+      })
+    : null
 }
 
 const getChromaScale = palette => {

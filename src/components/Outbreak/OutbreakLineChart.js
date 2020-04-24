@@ -48,6 +48,7 @@ function OutbreakLineChart({ labels, data, logarithmic }) {
   const [chartData, setChartData] = useState([])
 
   useEffect(() => {
+    if (!labels) return
     // build chart labels
     const min = format(new Date('3/9/2020'), 'M/d/yyyy')
     const minIndex = labels.indexOf(min)
