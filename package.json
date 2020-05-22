@@ -27,6 +27,7 @@
     "react-router-dom": "^5.1.2",
     "react-script-tag": "^1.1.2",
     "react-scripts": "3.4.0",
+    "request": "^2.88.2",
     "typeface-roboto": "0.0.75",
     "wi-outbreak": "file:../wi-outbreak"
   },

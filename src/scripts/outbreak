@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+
+const request = require('request')
+const { format } = require('date-fns')
+const { uri, dbRoute, dbName } = require('../env')
+const MongoClient = require('mongodb').MongoClient
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+const url = 'https://bit.ly/3dqNGE1'
+
+console.log('running...')
+client.connect().then(async client => {
+  console.log('db connection established')
+  request(url, (err, res, body) => {
+    if (err) console.log(err)
+    else {
+      let date
+      const data = JSON.parse(body).features.map(county => {
+        const c = county.attributes
+        c.DATE = format(new Date(c.LoadDttm), 'M/d/yyyy')
+        if (!date) date = c.DATE
+        delete c.LoadDttm
+        return c
+      })
+      // console.log(data)
+      client
+        .db(dbName)
+        .collection('wi')
+        .find({ DATE: date })
+        .toArray((err, res) => {
+          if (err) console.log(err)
+          else if (!res.length) {
+            console.log('inserting data to db')
+            //client.db(dbName).collection('wi').insertMany(data).then(() => {
+              console.log('closing client')
+              client.close()
+              process.exit()
+            //})
+          } else {
+            console.log(`already data for ${date}:`)
+            console.log(res.length, 'entries')
+            client.close()
+            process.exit()
+          }
+        })
+    }
+  })
+})
